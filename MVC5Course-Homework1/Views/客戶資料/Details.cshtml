@@ -1,13 +1,11 @@
 ﻿@model MVC5Course_Homework1.Models.客戶資料
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "客戶資料 - 詳細內容";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>客戶資料</h4>
+    <h2>客戶資料 - 詳細內容</h2>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -61,6 +59,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("編輯", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("回到列表頁", "Index")
 </p>
