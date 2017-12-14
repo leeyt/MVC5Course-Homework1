@@ -18,6 +18,20 @@
             return View(客戶聯絡人.ToList());
         }
 
+        [HttpPost]
+        public ActionResult Index(string keyword)
+        {
+            var result = db.客戶聯絡人.Include(p => p.客戶資料);
+
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return View(result.ToList());
+            }
+
+            result = result.Where(p => p.姓名.Contains(keyword));
+            return View(result);
+        }
+
         // GET: 客戶聯絡人/Details/5
         public ActionResult Details(int? id)
         {
@@ -116,7 +130,7 @@
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

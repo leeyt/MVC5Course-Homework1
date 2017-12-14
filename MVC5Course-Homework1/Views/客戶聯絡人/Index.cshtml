@@ -9,6 +9,13 @@
 <p>
     @Html.ActionLink("新增客戶連絡人", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+    @Html.TextBox("keyword", null, new { @class="form-control col-sm-4", placeholder = "姓名" })
+    <button type="submit" class="btn btn-info">搜尋</button>
+}
+
 <table class="table">
     <tr>
         <th>
