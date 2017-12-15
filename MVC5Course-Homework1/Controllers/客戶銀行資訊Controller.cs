@@ -14,7 +14,7 @@
         // GET: 客戶銀行資訊
         public ActionResult Index(string keyword)
         {
-            var data = db.客戶銀行資訊.Include(p => p.客戶資料).AsQueryable();
+            var data = db.客戶銀行資訊.Where(p => p.是否已刪除 == false).Include(p => p.客戶資料).AsQueryable();
 
             if (string.IsNullOrEmpty(keyword))
             {
@@ -32,7 +32,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶銀行資訊 客戶銀行資訊 = db.客戶銀行資訊.Find(id);
+            客戶銀行資訊 客戶銀行資訊 = db.客戶銀行資訊.Where(p => p.Id == id && p.是否已刪除 == false).SingleOrDefault();
             if (客戶銀行資訊 == null)
             {
                 return HttpNotFound();
@@ -72,7 +72,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶銀行資訊 客戶銀行資訊 = db.客戶銀行資訊.Find(id);
+            客戶銀行資訊 客戶銀行資訊 = db.客戶銀行資訊.Where(p => p.Id == id && p.是否已刪除 == false).SingleOrDefault();
             if (客戶銀行資訊 == null)
             {
                 return HttpNotFound();
@@ -105,7 +105,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶銀行資訊 客戶銀行資訊 = db.客戶銀行資訊.Find(id);
+            客戶銀行資訊 客戶銀行資訊 = db.客戶銀行資訊.Where(p => p.Id == id && p.是否已刪除 == false).SingleOrDefault();
             if (客戶銀行資訊 == null)
             {
                 return HttpNotFound();
@@ -118,8 +118,8 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            客戶銀行資訊 客戶銀行資訊 = db.客戶銀行資訊.Find(id);
-            db.客戶銀行資訊.Remove(客戶銀行資訊);
+            客戶銀行資訊 客戶銀行資訊 = db.客戶銀行資訊.Where(p => p.Id == id).SingleOrDefault();
+            客戶銀行資訊.是否已刪除 = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
