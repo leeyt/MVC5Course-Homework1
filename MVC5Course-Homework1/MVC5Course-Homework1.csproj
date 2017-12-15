@@ -148,6 +148,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\客戶統計資料檢視表.cs">
+      <DependentUpon>客戶資料庫.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\客戶聯絡人.cs">
       <DependentUpon>客戶資料庫.tt</DependentUpon>
     </Compile>
