@@ -25,6 +25,13 @@
             return View(data.ToList());
         }
 
+        // GET: 客戶資料/統計資料
+        public ActionResult 統計資料()
+        {
+            var data = db.客戶統計資料檢視表;
+            return View(data.ToList());
+        }
+
         // GET: 客戶資料/Details/5
         public ActionResult Details(int? id)
         {
