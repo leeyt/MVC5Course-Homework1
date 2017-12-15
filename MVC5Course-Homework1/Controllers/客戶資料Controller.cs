@@ -14,7 +14,7 @@
         // GET: 客戶資料
         public ActionResult Index(string keyword)
         {
-            var data = db.客戶資料.AsQueryable();
+            var data = db.客戶資料.Where(p => p.是否已刪除 == false).AsQueryable();
 
             if (string.IsNullOrEmpty(keyword))
             {
@@ -39,7 +39,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶資料 客戶資料 = db.客戶資料.Find(id);
+            客戶資料 客戶資料 = db.客戶資料.Where(p => p.Id == id && p.是否已刪除 == false).SingleOrDefault();
             if (客戶資料 == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             客戶資料 客戶資料 = db.客戶資料.Find(id);
-            if (客戶資料 == null)
+            if (客戶資料 == null || 客戶資料.是否已刪除 == true)
             {
                 return HttpNotFound();
             }
@@ -108,7 +108,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶資料 客戶資料 = db.客戶資料.Find(id);
+            客戶資料 客戶資料 = db.客戶資料.Where(p => p.Id == id && p.是否已刪除 == false).SingleOrDefault();
             if (客戶資料 == null)
             {
                 return HttpNotFound();
@@ -122,7 +122,7 @@
         public ActionResult DeleteConfirmed(int id)
         {
             客戶資料 客戶資料 = db.客戶資料.Find(id);
-            db.客戶資料.Remove(客戶資料);
+            客戶資料.是否已刪除 = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
