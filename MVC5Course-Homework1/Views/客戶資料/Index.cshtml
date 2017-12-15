@@ -20,6 +20,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.客戶分類)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.客戶名稱)
         </th>
         <th>
@@ -42,6 +45,16 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @if (item.客戶分類 == null)
+            {
+                <span>未分類</span>
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.客戶分類)
+            }
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.客戶名稱)
         </td>
