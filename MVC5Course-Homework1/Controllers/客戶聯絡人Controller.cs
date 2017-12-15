@@ -12,24 +12,17 @@
         private 客戶資料Entities db = new 客戶資料Entities();
 
         // GET: 客戶聯絡人
-        public ActionResult Index()
-        {
-            var 客戶聯絡人 = db.客戶聯絡人.Include(客 => 客.客戶資料);
-            return View(客戶聯絡人.ToList());
-        }
-
-        [HttpPost]
         public ActionResult Index(string keyword)
         {
-            var result = db.客戶聯絡人.Include(p => p.客戶資料);
+            var data = db.客戶聯絡人.Include(客 => 客.客戶資料).AsQueryable();
 
             if (string.IsNullOrEmpty(keyword))
             {
-                return View(result.ToList());
+                return View(data.ToList());
             }
 
-            result = result.Where(p => p.姓名.Contains(keyword));
-            return View(result);
+            data = data.Where(p => p.姓名.Contains(keyword));
+            return View(data.ToList());
         }
 
         // GET: 客戶聯絡人/Details/5
