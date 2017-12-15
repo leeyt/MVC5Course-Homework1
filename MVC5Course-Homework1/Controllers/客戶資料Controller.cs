@@ -1,5 +1,6 @@
 ﻿namespace MVC5Course_Homework1.Controllers
 {
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Net;
@@ -12,9 +13,24 @@
         private 客戶資料Entities db = new 客戶資料Entities();
 
         // GET: 客戶資料
-        public ActionResult Index(string keyword)
+        public ActionResult Index(string keyword, string category)
         {
+            var items = new List<string> { "全部" };
+            items.AddRange(
+                (from p in db.客戶資料
+                 where p.是否已刪除 == false
+                 select p.客戶分類)
+                      .Distinct()
+                      .OrderBy(x => x));
+
+            ViewBag.可選分類 = new SelectList(items);
+
             var data = db.客戶資料.Where(p => p.是否已刪除 == false).AsQueryable();
+            
+            if (!string.IsNullOrEmpty(category) && category != "全部")
+            {
+                data = data.Where(p => p.客戶分類 == category);
+            }
 
             if (string.IsNullOrEmpty(keyword))
             {

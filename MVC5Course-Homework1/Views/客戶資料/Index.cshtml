@@ -17,6 +17,14 @@
     <button type="submit" class="btn btn-info">搜尋</button>
 }
 
+@using (Html.BeginForm("Index", "客戶資料", FormMethod.Get))
+{
+    var items = (SelectList) ViewBag.可選分類;
+
+    @Html.DropDownList("category", items, "請選擇", new { @class = "form-control" })
+    <button type="submit" class="btn btn-info">篩選</button>
+}
+
 <table class="table">
     <tr>
         <th>
