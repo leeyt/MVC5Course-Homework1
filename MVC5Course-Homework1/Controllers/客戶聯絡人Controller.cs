@@ -14,7 +14,9 @@
         // GET: 客戶聯絡人
         public ActionResult Index(string keyword)
         {
-            var data = db.客戶聯絡人.Include(客 => 客.客戶資料).AsQueryable();
+            var data = db.客戶聯絡人
+                .Where(p => p.是否已刪除 == false)
+                .Include(p => p.客戶資料).AsQueryable();
 
             if (string.IsNullOrEmpty(keyword))
             {
@@ -32,7 +34,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶聯絡人 客戶聯絡人 = db.客戶聯絡人.Find(id);
+            客戶聯絡人 客戶聯絡人 = db.客戶聯絡人.Where(p => p.Id == id && p.是否已刪除 == false).SingleOrDefault();
             if (客戶聯絡人 == null)
             {
                 return HttpNotFound();
@@ -72,7 +74,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶聯絡人 客戶聯絡人 = db.客戶聯絡人.Find(id);
+            客戶聯絡人 客戶聯絡人 = db.客戶聯絡人.Where(p => p.Id == id && p.是否已刪除 == false).SingleOrDefault();
             if (客戶聯絡人 == null)
             {
                 return HttpNotFound();
@@ -105,7 +107,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶聯絡人 客戶聯絡人 = db.客戶聯絡人.Find(id);
+            客戶聯絡人 客戶聯絡人 = db.客戶聯絡人.Where(p => p.Id == id && p.是否已刪除 == false).SingleOrDefault();
             if (客戶聯絡人 == null)
             {
                 return HttpNotFound();
@@ -118,8 +120,8 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            客戶聯絡人 客戶聯絡人 = db.客戶聯絡人.Find(id);
-            db.客戶聯絡人.Remove(客戶聯絡人);
+            客戶聯絡人 客戶聯絡人 = db.客戶聯絡人.Where(p => p.Id == id).SingleOrDefault();
+            客戶聯絡人.是否已刪除 = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
